@@ -37,7 +37,7 @@ const userRouter = require("./routes/user");
 
   // CONFIG
 
-const PORT = 8080;
+
 const DB_URL = process.env.MONGO_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -155,6 +155,11 @@ app.use((err, req, res, next) => {
 });
 
 
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 
 module.exports = app;
