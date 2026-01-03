@@ -1,0 +1,137 @@
+<% layout("layouts/boilerplate") %>
+
+  <style>
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center; /* center the whole row */
+      gap: 1rem;
+      padding-top: 1rem;
+    }
+
+    .filter {
+      text-align: center;
+      margin: 0.9rem; /* small spacing around each coin */
+      opacity: 0.9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .filter p {
+      font-size: 0.85rem;
+      margin: 0;
+      color: var(--text);
+    }
+
+    /* coin-like icon container */
+    .filter > div {
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.04);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      transition: ease, transform 500ms ease, color 500ms ease;
+    }
+
+    .filter > div i {
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .filter:hover > div {
+      transform: translateY(-6px);
+      background: linear-gradient(90deg,var(--accent-2),var(--accent));
+    }
+
+    .filter:hover > div i {
+      color: #fff;
+    }
+
+    /* tax toggle removed: tax info will be shown by default */
+  </style>
+
+
+  <div id="filters">
+    <div class="filter">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-bed"></i></i></div>
+      <p>Rooms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Iconic Cities</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Pools</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-binoculars"></i></div>
+      <p>Camping</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-binoculars"></i></div>
+      <p>farms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Artic</p>
+    </div>
+
+        <div class="filter">
+      <div><i class="fa-solid fa-ship"></i></div>
+      <p>Boats</p>
+    </div>
+        <div class="filter">
+      <div><i class="fa-solid fa-igloo"></i></div>
+      <p>Dome</p>
+    </div>
+
+
+    <!-- tax toggle removed -->
+
+  </div>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 mt-3">
+    <% for(let list of allListings){ %>
+      <a href="/listings/<%=list.id%>" class="card-links ">
+        <div class="card col listing-card">
+          <img src="<%= list.image.url %>" class="card-img-top" alt="listing imagaes" style="height: 20rem ;">
+          <div class="card-img-overlay">
+            <h5 class="card-title"></h5>
+
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <b>
+                <%= list.title %>
+              </b>
+              <br>
+              &#8377; <%= list.price.toLocaleString("en-IN") %>/Night
+              <i class="tax-info"> &nbsp; &nbsp; +18% GST</i> 
+            </p>
+          </div>
+        </div>
+      </a>
+      <% } %>
+  </div>
+
+  <!-- tax toggle script removed -->

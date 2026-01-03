@@ -1,0 +1,91 @@
+<style>
+    .search-btn {
+        background-color: var(--accent);
+        color: #ffff;
+        border-radius: 25px;
+        padding: 0 1rem 0 1rem;
+        transition: background-color 220ms ease, color 220ms ease;
+    }
+
+    .search-btn:hover {
+        background-color: var(--accent-2);
+        color: #ffff;
+    }
+
+    .search-btn i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+
+    .search-inp {
+        border-radius: 25px;
+    }
+
+    body:not(.dark) .navbar {
+        background-color: white;
+    }
+     .fa-compass {
+     color: #fe424d;
+     font-size: 2rem;
+ }
+
+    body:not(.dark) .nav-link {
+         color: #222 !important;
+ }
+
+    @media (max-width: 576px) {
+            .navbar-nav .nav-link {
+                padding-top: 0.3rem !important;
+                padding-bottom: 0.3rem !important;
+            }
+            .search-inp {
+                margin-bottom: 0.3rem; 
+            }
+            .search-btn i {
+                display: none; /* Hide icon on small screens */
+            }
+            .search-btn {
+                padding: 0.3rem 0;
+            }
+            /* ensure navbar items wrap nicely */
+            .navbar-collapse { padding: 0.5rem 1rem; }
+        }
+ 
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href=""><i class="fa-regular fa-compass"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/listings">Explore</a>
+            </div>
+
+            <form class="navbar-nav ms-auto d-flex align-items-center" role="search" action="/listings/search" method="get" >
+                <!-- add name="query" so the server can read req.query.query -->
+                <input name="query" class="form-control me-2 search-inp" type="search" placeholder="Search destinations" aria-label="Search" required />
+                <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search
+                </button>
+            </form>
+
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/listings/new">Airbnb your home</a>
+                <!-- Dark mode toggle -->
+                <button id="dark-toggle" class="btn btn-sm ms-2" type="button" title="Toggle dark mode" aria-label="Toggle dark mode" aria-pressed="false">
+                    <i id="dark-icon" class="fa-regular fa-moon" aria-hidden="true"></i>
+                </button>
+                <% if(!currUser){ %>
+                    <a class="nav-link " aria-current="page" href="signup"><b>SignUp</b></a>
+                    <a class="nav-link" href="/login"><b>LogIn</b></a>
+                    <% } %>
+                        <% if(currUser) { %>
+                            <a class="nav-link" href="/logout"><b>LogOut</b></a>
+                            <% } %>
+
+            </div>
+        </div>
+    </div>
+</nav>
