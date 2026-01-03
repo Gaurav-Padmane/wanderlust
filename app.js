@@ -1,49 +1,49 @@
-/**************************
- * LOAD ENV FIRST
- **************************/
+
+
+
 require("dotenv").config();
 
-/**************************
- * CORE IMPORTS
- **************************/
+
+  // CORE IMPORTS
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 
-/**************************
- * MIDDLEWARE
- **************************/
+
+  // MIDDLEWARE
+
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 
-/**************************
- * AUTH
- **************************/
+
+  // AUTH
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
-/**************************
- * ROUTES
- **************************/
+
+  // ROUTES
+
 const listingsRouter = require("./routes/listings");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
-/**************************
- * CONFIG
- **************************/
+
+  // CONFIG
+
 const PORT = 8080;
 const DB_URL = process.env.ATLASDB_URL;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
-/**************************
- * BASIC SAFETY CHECKS
- **************************/
+
+  // BASIC SAFETY CHECKS
+
 if (!DB_URL) {
   console.error(" ATLASDB_URL is missing in .env");
   process.exit(1);
@@ -54,9 +54,9 @@ if (!SESSION_SECRET) {
   process.exit(1);
 }
 
-/**************************
- * DATABASE CONNECTION
- **************************/
+
+  // DATABASE CONNECTION
+
 mongoose
   .connect(DB_URL)
   .then(() => console.log(" MongoDB connected"))
@@ -65,23 +65,23 @@ mongoose
     process.exit(1);
   });
 
-/**************************
- * VIEW ENGINE
- **************************/
+
+  // VIEW ENGINE
+
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-/**************************
- * APP MIDDLEWARE
- **************************/
+
+  // APP MIDDLEWARE
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
-/**************************
- * SESSION STORE
- **************************/
+
+  // SESSION STORE
+
 const store = MongoStore.create({
   mongoUrl: DB_URL,
   crypto: {
@@ -94,9 +94,9 @@ store.on("error", (err) => {
   console.error(" Session store error:", err);
 });
 
-/**************************
- * SESSION CONFIG
- **************************/
+
+  // SESSION CONFIG
+
 app.use(
   session({
     store,
@@ -112,9 +112,9 @@ app.use(
 
 app.use(flash());
 
-/**************************
- * PASSPORT CONFIG
- **************************/
+
+  // PASSPORT CONFIG
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -122,9 +122,9 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-/**************************
- * GLOBAL LOCALS
- **************************/
+
+  // GLOBAL LOCALS
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -132,31 +132,31 @@ app.use((req, res, next) => {
   next();
 });
 
-/**************************
- * ROUTES
- **************************/
+
+  // ROUTES
+
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-/**************************
- * 404 HANDLER
- **************************/
+
+  // 404 HANDLER
+
 app.use((req, res) => {
   res.status(404).render("listings/notFound.ejs");
 });
 
-/**************************
- * ERROR HANDLER
- **************************/
+
+  // ERROR HANDLER
+
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { message });
 });
 
-/**************************
- * SERVER
- **************************/
+
+  // SERVER
+
 app.listen(PORT, () => {
   console.log(` Server running on port ${PORT}`);
 });
