@@ -38,7 +38,7 @@ const userRouter = require("./routes/user");
   // CONFIG
 
 const PORT = 8080;
-const DB_URL = process.env.ATLASDB_URL;
+const DB_URL = process.env.MONGO_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
 
@@ -153,6 +153,8 @@ app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { message });
 });
+
+
 
 
 module.exports = app;
