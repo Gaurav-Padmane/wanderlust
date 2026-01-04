@@ -135,9 +135,14 @@ app.use((req, res, next) => {
 
   // ROUTES
 
-app.use("/listings", listingsRouter);
-app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
+  // Redirect root to listings index so landing page opens on /listings
+  app.get("/", (req, res) => {
+    return res.redirect("/listings");
+  });
+
+  app.use("/listings", listingsRouter);
+  app.use("/listings/:id/reviews", reviewRouter);
+  app.use("/", userRouter);
 
 
   // 404 HANDLER
@@ -163,3 +168,4 @@ app.listen(PORT, () => {
 
 
 module.exports = app;
+

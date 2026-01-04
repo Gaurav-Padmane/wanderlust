@@ -9,7 +9,7 @@
             <p class="card-text">
 
             <p class="card-text"><i> <u>Owned by : </u> <br>
-                    <%= listing.owner.username %>
+                    <%= listing.owner ? listing.owner.username : 'Unknown' %>
                 </i> </p><br>
             <p class="card-text">
                 <%= listing.description %>
@@ -25,7 +25,7 @@
             </p>
         </div>
     </div>
-    <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+    <% if (listing.owner && currUser && currUser._id.equals(listing.owner._id)) { %>
         <div class="btns offset-2">
             <div class="col-1">
                 <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
@@ -89,7 +89,7 @@
                         <% for(review of listing.reviews ) { %>
 
                             <div class="card col-4 mb-4 ms-3">
-                                <h5 class="card-title">@<%= review.author.username %>
+                                <h5 class="card-title">@<%= review.author ? review.author.username : 'Unknown' %>
                                 </h5>
                                 <p class="starability-result card-text" data-rating=<%=review.rating %>>
 
